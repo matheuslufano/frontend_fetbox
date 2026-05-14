@@ -12,7 +12,7 @@ export default function Home() {
       </div>
 
       <div className="card">
-        <p>Afiliado:</p>
+        <p>Afiliado: </p>
         <strong>Fulano</strong>
       </div>
     </div>
