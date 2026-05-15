@@ -8,6 +8,7 @@ import { LuFolderSearch, LuFileChartLine } from "react-icons/lu";
 import { PiLinkSimpleFill } from "react-icons/pi";
 import { FaGear } from "react-icons/fa6";
 import { RiLogoutBoxFill } from "react-icons/ri";
+import { ImUsers } from "react-icons/im";
 
 import Image from "next/image";
 
@@ -36,6 +37,13 @@ export default function Sidebar() {
             <Link href="/pages/menu" className={styles.menuItem}>
               <IoHome className={styles.icon} />
               <span>Menu</span>
+            </Link>
+          </li>
+
+          <li className={styles.button}>
+            <Link href="/pages/afiliado" className={styles.menuItem}>
+              <ImUsers className={styles.icon} />
+              <span>Afiliado</span>
             </Link>
           </li>
 
