@@ -2,20 +2,16 @@
 
 import { useState } from "react";
 
-/** Item vindo da API (`GET /affiliate/:id/stats`), campo `promoLink` igual ao retorno de `POST /links`. */
 export type AffiliatePromoLinkItem = {
   id: number;
   promoLink: string;
+  originalUrl?: string;
 };
 
 type AffiliatePromoLinksProps = {
   links: AffiliatePromoLinkItem[];
 };
 
-/**
- * Lista os links de divulgação retornados pela API (`promoLink`),
- * mesma URL gerada ao criar o link no backend (`APP_URL` + `/r/` + código).
- */
 export default function AffiliatePromoLinks({ links }: AffiliatePromoLinksProps) {
   const [copiedId, setCopiedId] = useState<number | null>(null);
 
@@ -24,7 +20,7 @@ export default function AffiliatePromoLinks({ links }: AffiliatePromoLinksProps)
   }
 
   const missingPromo = links.some(
-    (l) => !l.promoLink || !String(l.promoLink).trim()
+    (link) => !link.promoLink || !String(link.promoLink).trim()
   );
 
   if (missingPromo) {
@@ -38,10 +34,10 @@ export default function AffiliatePromoLinks({ links }: AffiliatePromoLinksProps)
           fontSize: 14,
         }}
       >
-        <strong>Links de divulgação</strong>
+        <strong>Links de divulgacao</strong>
         <p style={{ margin: "8px 0 0" }}>
-          A API não retornou o campo <code>promoLink</code>. Atualize o backend e
-          recarregue a página.
+          A API nao retornou o campo <code>promoLink</code>. Atualize o backend e
+          recarregue a pagina.
         </p>
       </div>
     );
@@ -49,7 +45,7 @@ export default function AffiliatePromoLinks({ links }: AffiliatePromoLinksProps)
 
   return (
     <div style={{ marginTop: 12 }}>
-      <strong>Links de divulgação</strong>
+      <strong>Links completos para enviar ao afiliado</strong>
       <ul
         style={{
           listStyle: "none",
@@ -57,11 +53,12 @@ export default function AffiliatePromoLinks({ links }: AffiliatePromoLinksProps)
           margin: "8px 0 0",
         }}
       >
-        {links.map((l) => {
-          const href = l.promoLink.trim();
+        {links.map((link) => {
+          const href = link.promoLink.trim();
+
           return (
             <li
-              key={l.id}
+              key={link.id}
               style={{
                 display: "flex",
                 flexWrap: "wrap",
@@ -71,20 +68,37 @@ export default function AffiliatePromoLinks({ links }: AffiliatePromoLinksProps)
                 borderBottom: "1px solid #eee",
               }}
             >
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ wordBreak: "break-all", flex: "1 1 200px" }}
-              >
-                {href}
-              </a>
+              <div style={{ flex: "1 1 260px", minWidth: 0 }}>
+                <div style={{ fontSize: 13, color: "#555", marginBottom: 4 }}>
+                  Link completo
+                </div>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ wordBreak: "break-all" }}
+                >
+                  {href}
+                </a>
+                {link.originalUrl && (
+                  <div
+                    style={{
+                      color: "#666",
+                      fontSize: 13,
+                      marginTop: 4,
+                      wordBreak: "break-all",
+                    }}
+                  >
+                    Destino: {link.originalUrl}
+                  </div>
+                )}
+              </div>
               <button
                 type="button"
                 onClick={async () => {
                   try {
                     await navigator.clipboard.writeText(href);
-                    setCopiedId(l.id);
+                    setCopiedId(link.id);
                     window.setTimeout(() => setCopiedId(null), 2000);
                   } catch {
                     setCopiedId(-1);
@@ -92,7 +106,7 @@ export default function AffiliatePromoLinks({ links }: AffiliatePromoLinksProps)
                   }
                 }}
               >
-                {copiedId === l.id ? "Copiado!" : "Copiar"}
+                {copiedId === link.id ? "Copiado!" : "Copiar link"}
               </button>
             </li>
           );

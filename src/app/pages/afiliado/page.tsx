@@ -1,24 +1,18 @@
 "use client";
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import styles from "./menu.module.css";
 import conteine from "../../styles/components.module.css";
-import api from "../../../services/api";
-
-type Affiliate = {
-  id: number;
-  name: string;
-  email: string;
-  phone: string | null;
-  active: boolean;
-};
-
-type City = {
-  id: number;
-  name: string;
-  uf: string;
-};
+import {
+  Affiliate,
+  City,
+  apagarAfiliado,
+  criarAfiliado,
+  editarAfiliado,
+  getApiErrorMessage,
+  listarAfiliados,
+  listarCidadesTocantins,
+} from "../../../services/api";
 
 export default function Afiliado() {
   const [name, setName] = useState("");
@@ -30,14 +24,21 @@ export default function Afiliado() {
   const [loading, setLoading] = useState(true);
   const [loadingCities, setLoadingCities] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editPhone, setEditPhone] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+  const [editCity, setEditCity] = useState("");
+  const [savingId, setSavingId] = useState<number | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function refreshAffiliates() {
     setLoading(true);
     try {
-      const { data } = await api.get<Affiliate[]>("/affiliate");
-      setAffiliates(Array.isArray(data) ? data : []);
+      const data = await listarAfiliados();
+      setAffiliates(data);
     } catch {
       setAffiliates([]);
     } finally {
@@ -50,9 +51,9 @@ export default function Afiliado() {
 
     async function loadInitialAffiliates() {
       try {
-        const { data } = await api.get<Affiliate[]>("/affiliate");
+        const data = await listarAfiliados();
         if (!cancelled) {
-          setAffiliates(Array.isArray(data) ? data : []);
+          setAffiliates(data);
         }
       } catch {
         if (!cancelled) {
@@ -66,6 +67,7 @@ export default function Afiliado() {
     }
 
     loadInitialAffiliates();
+
     return () => {
       cancelled = true;
     };
@@ -76,9 +78,8 @@ export default function Afiliado() {
 
     async function loadCities() {
       try {
-        const { data } = await api.get<City[]>("/cities/tocantins");
+        const list = await listarCidadesTocantins();
         if (!cancelled) {
-          const list = Array.isArray(data) ? data : [];
           setCities(list);
           setCity(list[0]?.name ?? "");
         }
@@ -95,6 +96,7 @@ export default function Afiliado() {
     }
 
     loadCities();
+
     return () => {
       cancelled = true;
     };
@@ -110,28 +112,138 @@ export default function Afiliado() {
       return;
     }
 
+    const normalizedEmail = email.trim().toLowerCase();
+    const emailAlreadyExists = affiliates.some(
+      (affiliate) => affiliate.email?.toLowerCase() === normalizedEmail
+    );
+
+    if (emailAlreadyExists) {
+      setError("E-mail ja cadastrado.");
+      return;
+    }
+
     setSubmitting(true);
     try {
-      await api.post("/affiliate", {
+      const createdAffiliate = await criarAfiliado({
         name: name.trim(),
-        email: email.trim(),
+        email: normalizedEmail,
         phone: phone.trim() || undefined,
+        city: city.trim() || undefined,
       });
 
+      setAffiliates((current) => [createdAffiliate, ...current]);
       setName("");
       setPhone("");
       setEmail("");
       setCity(cities[0]?.name ?? "");
       setMessage("Afiliado criado com sucesso.");
-      await refreshAffiliates();
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.data?.error) {
-        setError(String(err.response.data.error));
-      } else {
-        setError("Nao foi possivel criar o afiliado.");
-      }
+      setError(
+        getApiErrorMessage(err, "Nao foi possivel criar o afiliado.")
+      );
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  function handleStartEdit(affiliate: Affiliate) {
+    setError(null);
+    setMessage(null);
+    setEditingId(affiliate.id);
+    setEditName(affiliate.name);
+    setEditPhone(affiliate.phone ?? "");
+    setEditEmail(affiliate.email ?? "");
+    setEditCity(affiliate.city ?? cities[0]?.name ?? "");
+  }
+
+  function handleCancelEdit() {
+    setEditingId(null);
+    setEditName("");
+    setEditPhone("");
+    setEditEmail("");
+    setEditCity("");
+  }
+
+  async function handleSaveEdit(id: number) {
+    setError(null);
+    setMessage(null);
+
+    if (!editName.trim() || !editEmail.trim()) {
+      setError("Nome e e-mail sao obrigatorios.");
+      return;
+    }
+
+    const normalizedEmail = editEmail.trim().toLowerCase();
+    const emailAlreadyExists = affiliates.some(
+      (affiliate) =>
+        affiliate.id !== id &&
+        affiliate.email?.toLowerCase() === normalizedEmail
+    );
+
+    if (emailAlreadyExists) {
+      setError("E-mail ja cadastrado.");
+      return;
+    }
+
+    setSavingId(id);
+    try {
+      const updatedAffiliate = await editarAfiliado(id, {
+        name: editName.trim(),
+        email: normalizedEmail,
+        phone: editPhone.trim() || undefined,
+        city: editCity.trim() || undefined,
+      });
+
+      setAffiliates((current) =>
+        current.map((affiliate) =>
+          affiliate.id === id ? updatedAffiliate : affiliate
+        )
+      );
+      handleCancelEdit();
+      setMessage("Afiliado atualizado com sucesso.");
+    } catch (err) {
+      setError(
+        getApiErrorMessage(
+          err,
+          "Nao foi possivel atualizar o afiliado."
+        )
+      );
+    } finally {
+      setSavingId(null);
+    }
+  }
+
+  async function handleDelete(affiliate: Affiliate) {
+    setError(null);
+    setMessage(null);
+
+    const confirmed = window.confirm(
+      `Apagar o afiliado ${affiliate.name}?`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingId(affiliate.id);
+    try {
+      await apagarAfiliado(affiliate.id);
+      setAffiliates((current) =>
+        current.filter((item) => item.id !== affiliate.id)
+      );
+
+      if (editingId === affiliate.id) {
+        handleCancelEdit();
+      }
+
+      setMessage("Afiliado apagado com sucesso.");
+    } catch (err) {
+      setError(
+        getApiErrorMessage(err, "Nao foi possivel apagar o afiliado.")
+      );
+      await refreshAffiliates();
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -204,11 +316,122 @@ export default function Afiliado() {
           ) : affiliates.length === 0 ? (
             <p>Nenhum afiliado cadastrado.</p>
           ) : (
-            <ul style={{ paddingLeft: 20 }}>
+            <ul className={styles.affiliateList}>
               {affiliates.map((affiliate) => (
-                <li key={affiliate.id}>
-                  {affiliate.name} - {affiliate.email}
-                  {affiliate.phone ? ` - ${affiliate.phone}` : ""}
+                <li
+                  key={affiliate.id}
+                  className={styles.affiliateItem}
+                >
+                  {editingId === affiliate.id ? (
+                    <div className={styles.editGrid}>
+                      <input
+                        type="text"
+                        value={editName}
+                        onChange={(event) =>
+                          setEditName(event.target.value)
+                        }
+                        aria-label="Nome do afiliado"
+                      />
+
+                      <input
+                        type="email"
+                        value={editEmail}
+                        onChange={(event) =>
+                          setEditEmail(event.target.value)
+                        }
+                        aria-label="E-mail do afiliado"
+                      />
+
+                      <input
+                        type="text"
+                        value={editPhone}
+                        onChange={(event) =>
+                          setEditPhone(event.target.value)
+                        }
+                        aria-label="Numero do afiliado"
+                      />
+
+                      <select
+                        value={editCity}
+                        onChange={(event) =>
+                          setEditCity(event.target.value)
+                        }
+                        disabled={loadingCities}
+                        aria-label="Cidade do afiliado"
+                      >
+                        {loadingCities && (
+                          <option>Carregando cidades...</option>
+                        )}
+                        {!loadingCities && cities.length === 0 && (
+                          <option>Nenhuma cidade encontrada</option>
+                        )}
+                        {cities.map((cidade) => (
+                          <option
+                            key={cidade.id}
+                            value={cidade.name}
+                          >
+                            {cidade.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ) : (
+                    <div className={styles.affiliateInfo}>
+                      <strong>{affiliate.name}</strong>
+                      <span>{affiliate.email}</span>
+                      {affiliate.phone && <span>{affiliate.phone}</span>}
+                      {affiliate.city && <span>{affiliate.city}</span>}
+                    </div>
+                  )}
+
+                  <div className={styles.actions}>
+                    {editingId === affiliate.id ? (
+                      <>
+                        <button
+                          type="button"
+                          className={styles.saveButton}
+                          onClick={() => handleSaveEdit(affiliate.id)}
+                          disabled={savingId === affiliate.id}
+                        >
+                          {savingId === affiliate.id
+                            ? "Salvando..."
+                            : "Salvar"}
+                        </button>
+
+                        <button
+                          type="button"
+                          className={styles.secondaryButton}
+                          onClick={handleCancelEdit}
+                          disabled={savingId === affiliate.id}
+                        >
+                          Cancelar
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        type="button"
+                        className={styles.editButton}
+                        onClick={() => handleStartEdit(affiliate)}
+                        disabled={deletingId === affiliate.id}
+                      >
+                        Editar
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      className={styles.deleteButton}
+                      onClick={() => handleDelete(affiliate)}
+                      disabled={
+                        deletingId === affiliate.id ||
+                        savingId === affiliate.id
+                      }
+                    >
+                      {deletingId === affiliate.id
+                        ? "Apagando..."
+                        : "Apagar"}
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>

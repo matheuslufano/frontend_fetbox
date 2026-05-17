@@ -1,0 +1,295 @@
+.page {
+  padding: 24px;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* =========================
+   CARDS GERAIS
+========================= */
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 16px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================
+   RESUMO GERAL + TOP
+========================= */
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* =========================
+   TABELAS GERAIS
+========================= */
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.tableHead {
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  background: #f8f9fc;
+}
+
+.tableHead th {
+  font-weight: 600;
+}
+
+.tableRow {
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease;
+}
+
+.tableRow:hover {
+  background: #fafafa;
+}
+
+.cell {
+  padding: 12px 8px;
+}
+
+.smallCell {
+  padding: 10px 8px;
+}
+
+.mono {
+  font-family: monospace;
+}
+
+.breakWord {
+  word-break: break-word;
+}
+
+/* =========================
+   STATUS E ERRO
+========================= */
+
+.error {
+  color: #b00020;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.refreshButton {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.refreshButton:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.refreshButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.infoText {
+  margin: 8px 0;
+}
+
+.noMarginBottom {
+  margin-bottom: 0;
+}
+
+/* =========================
+   DETALHE POR AFILIADO
+========================= */
+
+.affiliateCard {
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 20px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.affiliateHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.affiliateName {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.affiliateId {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #777;
+}
+
+/* =========================
+   MÉTRICAS
+========================= */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.statBox {
+  background: #f8f9fc;
+  border: 1px solid #eef1f5;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.statBox span {
+  display: block;
+  color: #666;
+  font-size: 14px;
+}
+
+.statBox strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* =========================
+   LINKS PROMOCIONAIS
+========================= */
+
+.linksSection {
+  margin-bottom: 24px;
+}
+
+.linksSection h4 {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* =========================
+   BADGES E LINKS
+========================= */
+
+.codeBadge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.clickBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eef4ff;
+  font-weight: 600;
+}
+
+.link {
+  color: #2563eb;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .affiliateCard {
+    padding: 18px;
+  }
+
+  .affiliateHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .refreshButton {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .sectionTitle {
+    font-size: 22px;
+  }
+
+  .cell,
+  .smallCell {
+    font-size: 14px;
+  }
+}

@@ -1,14 +1,13 @@
 "use client";
 
-import axios from "axios";
 import { useEffect, useState } from "react";
-import api from "../../../services/api";
-import conteine from "../../styles/components.module.css"
-
-type Affiliate = {
-  id: number;
-  name: string;
-};
+import {
+  Affiliate,
+  criarLink,
+  getApiErrorMessage,
+  listarAfiliados,
+} from "../../../services/api";
+import conteine from "../../styles/components.module.css";
 
 export default function Links() {
   const [url, setUrl] = useState("");
@@ -22,10 +21,11 @@ export default function Links() {
 
   useEffect(() => {
     let cancelled = false;
+
     async function loadAffiliates() {
       try {
-        const { data } = await api.get<Affiliate[]>("/affiliate");
-        if (!cancelled && Array.isArray(data)) {
+        const data = await listarAfiliados();
+        if (!cancelled) {
           setAffiliates(data);
         }
       } catch {
@@ -38,7 +38,9 @@ export default function Links() {
         }
       }
     }
+
     loadAffiliates();
+
     return () => {
       cancelled = true;
     };
@@ -61,21 +63,21 @@ export default function Links() {
       const payload: { url: string; affiliateId?: number } = {
         url: trimmed,
       };
+
       if (affiliateId !== "") {
         payload.affiliateId = Number(affiliateId);
       }
-      const { data } = await api.post<{ message: string; link: string }>(
-        "/links",
-        payload
-      );
+
+      const data = await criarLink(payload);
       setCreatedLink(data.link);
       setUrl("");
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.data?.error) {
-        setError(String(err.response.data.error));
-      } else {
-        setError("Não foi possível criar o link. Tente novamente.");
-      }
+      setError(
+        getApiErrorMessage(
+          err,
+          "Nao foi possivel criar o link. Tente novamente."
+        )
+      );
     } finally {
       setSubmitting(false);
     }
@@ -83,11 +85,12 @@ export default function Links() {
 
   async function copyLink() {
     if (!createdLink) return;
+
     try {
       await navigator.clipboard.writeText(createdLink);
-      setCopyHint("Copiado para a área de transferência.");
+      setCopyHint("Copiado para a area de transferencia.");
     } catch {
-      setCopyHint("Não foi possível copiar automaticamente.");
+      setCopyHint("Nao foi possivel copiar automaticamente.");
     }
   }
 
@@ -143,7 +146,7 @@ export default function Links() {
 
             <div style={{ marginTop: 20 }}>
               <button type="submit" disabled={submitting}>
-                {submitting ? "Gerando…" : "Gerar link"}
+                {submitting ? "Gerando..." : "Gerar link"}
               </button>
             </div>
           </form>

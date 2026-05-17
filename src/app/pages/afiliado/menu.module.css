@@ -149,6 +149,103 @@
   flex-direction: column;
 }
 
+.affiliateList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+  margin: 18px 0 0;
+  list-style: none;
+}
+
+.affiliateItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid #f0d8cf;
+  border-radius: 12px;
+  background: #fffaf8;
+}
+
+.affiliateInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  color: #2a2a2a;
+}
+
+.affiliateInfo span {
+  color: #555;
+  overflow-wrap: anywhere;
+}
+
+.editGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.actions button {
+  min-width: 76px;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.editButton {
+  background: #2563eb;
+}
+
+.editButton:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.saveButton {
+  background: #137333;
+}
+
+.saveButton:hover:not(:disabled) {
+  background: #0f5f2a;
+}
+
+.secondaryButton {
+  background: #6b7280;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: #4b5563;
+}
+
+.deleteButton {
+  background: #b00020;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: #8f001a;
+}
+
 @media (width < 768px) {
 
   .row {
@@ -190,6 +287,23 @@
     border-radius: 7px;
     color: white;
     font-size: 13px;
+  }
+
+  .affiliateItem {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+
+  .actions button {
+    flex: 1;
   }
 
 }
