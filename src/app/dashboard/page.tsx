@@ -1,22 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-import SummaryCard from "./components/SummaryCard";
-import TopAffiliates from "./components/TopAffiliates";
-import AffiliatesTable from "./components/AffiliatesTable";
-
-import styles from "./relatorios.module.css";
-
+import AffiliatesTable from "../components/report/AffiliatesTable";
+import SummaryCard from "../components/report/SummaryCard";
+import TopAffiliates from "../components/report/TopAffiliates";
 import {
+  Affiliate,
   buscarDashboard,
   DashboardData,
   getApiErrorMessage,
+  listarAfiliados,
 } from "../../services/api";
+import styles from "./relatorios.module.css";
 
 export default function Dashboard() {
   const [data, setData] =
     useState<DashboardData | null>(null);
+
+  const [affiliateRows, setAffiliateRows] =
+    useState<Affiliate[]>([]);
 
   const [error, setError] =
     useState<string | null>(null);
@@ -26,18 +28,22 @@ export default function Dashboard() {
 
     async function load() {
       try {
-        const response =
-          await buscarDashboard();
+        const [dashboard, affiliates] =
+          await Promise.all([
+            buscarDashboard(),
+            listarAfiliados(),
+          ]);
 
         if (!cancelled) {
-          setData(response);
+          setData(dashboard);
+          setAffiliateRows(affiliates);
         }
       } catch (err) {
         if (!cancelled) {
           setError(
             getApiErrorMessage(
               err,
-              "Não foi possível carregar o dashboard."
+              "Nao foi possivel carregar o dashboard."
             )
           );
         }
@@ -73,23 +79,12 @@ export default function Dashboard() {
         Dashboard
       </h1>
 
-      {/* Resumo + Top afiliados */}
       <div className={styles.summaryGrid}>
-        <SummaryCard
-          dashboard={data}
-        />
-
-        <TopAffiliates
-          affiliates={data.topAffiliates}
-        />
+        <SummaryCard dashboard={data} />
+        <TopAffiliates affiliates={data.topAffiliates} />
       </div>
 
-      {/* Afiliados cadastrados
-      <AffiliatesTable
-        affiliates={
-          data.affiliates ?? []
-        }
-      /> */}
+      <AffiliatesTable affiliateRows={affiliateRows} />
     </div>
   );
 }

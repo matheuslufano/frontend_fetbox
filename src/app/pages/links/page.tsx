@@ -1,6 +1,14 @@
 "use client";
 
+import Head from "next/head";
 import { useEffect, useState } from "react";
+import {
+  FiCopy,
+  FiExternalLink,
+  FiLink,
+  FiTag,
+  FiUser,
+} from "react-icons/fi";
 import {
   Affiliate,
   criarLink,
@@ -8,8 +16,10 @@ import {
   listarAfiliados,
 } from "../../../services/api";
 import conteine from "../../styles/components.module.css";
+import styles from "./links.module.css";
 
 export default function Links() {
+  const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [affiliateId, setAffiliateId] = useState("");
   const [affiliates, setAffiliates] = useState<Affiliate[]>([]);
@@ -60,9 +70,17 @@ export default function Links() {
 
     setSubmitting(true);
     try {
-      const payload: { url: string; affiliateId?: number } = {
+      const payload: {
+        name?: string;
+        url: string;
+        affiliateId?: number;
+      } = {
         url: trimmed,
       };
+
+      if (name.trim()) {
+        payload.name = name.trim();
+      }
 
       if (affiliateId !== "") {
         payload.affiliateId = Number(affiliateId);
@@ -70,6 +88,7 @@ export default function Links() {
 
       const data = await criarLink(payload);
       setCreatedLink(data.link);
+      setName("");
       setUrl("");
     } catch (err) {
       setError(
@@ -96,84 +115,129 @@ export default function Links() {
 
   return (
     <div className={conteine.contreine}>
-      <div>
-        <h1>Links e QR</h1>
+      <div className={styles.page}>
+        <Head>
+          <title>Criador de links</title>
+        </Head>
 
-        <div className="card">
-          <h2 style={{ marginTop: 0 }}>Novo link encurtado</h2>
-          <form onSubmit={handleSubmit}>
-            <p style={{ marginBottom: 8 }}>
-              <label htmlFor="dest-url">URL de destino</label>
-            </p>
-            <input
-              id="dest-url"
-              type="url"
-              name="url"
-              placeholder="https://exemplo.com/pagina"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              style={{
-                width: "100%",
-                maxWidth: 480,
-                padding: "8px 10px",
-                boxSizing: "border-box",
-              }}
-              autoComplete="off"
-            />
+        <header className={styles.header}>
+          <span className={styles.badge}>Links e QR</span>
+          <h1>Crie rapido um link de afiliado</h1>
+          <p>
+            Nomeie campanhas, escolha um afiliado e gere um link curto para
+            acompanhar resultados no relatorio.
+          </p>
+        </header>
 
-            <p style={{ marginTop: 16, marginBottom: 8 }}>
-              <label htmlFor="affiliate">Afiliado (opcional)</label>
-            </p>
-            <select
-              id="affiliate"
-              value={affiliateId}
-              onChange={(e) => setAffiliateId(e.target.value)}
-              disabled={loadingAffiliates}
-              style={{
-                width: "100%",
-                maxWidth: 480,
-                padding: "8px 10px",
-                boxSizing: "border-box",
-              }}
-            >
-              <option value="">Nenhum</option>
-              {affiliates.map((a) => (
-                <option key={a.id} value={String(a.id)}>
-                  {a.name}
+        <section className={styles.card}>
+          <div className={styles.cardHeader}>
+            <div className={styles.cardIcon}>
+              <FiLink aria-hidden="true" />
+            </div>
+
+            <div>
+              <h2>Novo link encurtado</h2>
+              <p>Preencha os dados abaixo para criar um link rastreavel.</p>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <label className={styles.field} htmlFor="link-name">
+              <span>
+                <FiTag aria-hidden="true" />
+                Nome do link
+              </span>
+              <input
+                id="link-name"
+                type="text"
+                name="name"
+                placeholder="Ex: Plano familia - Maio"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="off"
+              />
+            </label>
+
+            <label className={styles.field} htmlFor="dest-url">
+              <span>
+                <FiExternalLink aria-hidden="true" />
+                URL de destino
+              </span>
+              <input
+                id="dest-url"
+                type="url"
+                name="url"
+                placeholder="https://exemplo.com/pagina"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                autoComplete="off"
+              />
+            </label>
+
+            <label className={styles.field} htmlFor="affiliate">
+              <span>
+                <FiUser aria-hidden="true" />
+                Afiliado
+              </span>
+              <select
+                id="affiliate"
+                value={affiliateId}
+                onChange={(e) => setAffiliateId(e.target.value)}
+                disabled={loadingAffiliates}
+              >
+                <option value="">
+                  {loadingAffiliates ? "Carregando afiliados..." : "Nenhum"}
                 </option>
-              ))}
-            </select>
+                {affiliates.map((affiliate) => (
+                  <option key={affiliate.id} value={String(affiliate.id)}>
+                    {affiliate.name}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-            <div style={{ marginTop: 20 }}>
-              <button type="submit" disabled={submitting}>
+            <div className={styles.actions}>
+              <button
+                type="submit"
+                disabled={submitting}
+                className={styles.primaryButton}
+              >
+                <FiLink aria-hidden="true" />
                 {submitting ? "Gerando..." : "Gerar link"}
               </button>
             </div>
           </form>
 
           {error && (
-            <p style={{ color: "#b00020", marginTop: 16 }} role="alert">
+            <p className={styles.error} role="alert">
               {error}
             </p>
           )}
 
           {createdLink && (
-            <div style={{ marginTop: 20 }}>
-              <p style={{ marginBottom: 8 }}>Seu link:</p>
-              <a href={createdLink} target="_blank" rel="noopener noreferrer">
-                {createdLink}
-              </a>
-              <div style={{ marginTop: 10 }}>
-                <button type="button" onClick={copyLink}>
-                  Copiar link
-                </button>
+            <div className={styles.result}>
+              <div className={styles.resultText}>
+                <span>Seu link</span>
+                <a href={createdLink} target="_blank" rel="noopener noreferrer">
+                  {createdLink}
+                </a>
               </div>
+
+              <button
+                type="button"
+                onClick={copyLink}
+                className={styles.copyButton}
+              >
+                <FiCopy aria-hidden="true" />
+                Copiar
+              </button>
+
               {copyHint && (
-                <p style={{ marginTop: 8, fontSize: 14 }}>{copyHint}</p>
+                <p className={styles.copyHint}>{copyHint}</p>
               )}
             </div>
           )}
-        </div>
+        </section>
       </div>
     </div>
   );

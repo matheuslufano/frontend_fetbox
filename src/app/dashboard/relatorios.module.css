@@ -95,8 +95,23 @@
 /* RESPONSIVO */
 
 @media (max-width: 768px) {
+  .page {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .summaryGrid,
   .summaryStats {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .page {
+    padding: 12px;
   }
 }
 /* =========================

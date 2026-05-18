@@ -31,6 +31,19 @@
   margin: 0px;
 }
 
+.fieldBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.fieldBlock label {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1f1f1f;
+}
+
 .conteiner input {
   width: 100%;
   height: 45px;
@@ -59,6 +72,7 @@
 
 .conteiner select {
   width: 100%;
+  box-sizing: border-box;
   height: 48px;
   padding: 12px 14px;
   border: 2px solid #ff60342d;
@@ -104,7 +118,8 @@
 
 .menu button {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
   background-color: #d43508;
   padding: 10px 10px;
   margin-top: 10px;
@@ -120,6 +135,106 @@
 .menu button:hover {
   background-color: rgb(255, 60, 0);
   box-shadow: 0 6px 14px rgba(255, 64, 12, 0.3);
+}
+
+.menu button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.secondaryButton {
+  background: #1f2937 !important;
+  margin-top: 0 !important;
+  white-space: nowrap;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: #111827 !important;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 8px;
+  margin-bottom: 14px;
+}
+
+.groupHeader strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.groupHeader p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.affiliateGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.affiliateOption {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #f0d8cf;
+  border-radius: 12px;
+  background: #fffaf8;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.affiliateOption:hover {
+  border-color: #ff5f34;
+  box-shadow: 0 6px 16px rgba(255, 95, 52, 0.12);
+  transform: translateY(-1px);
+}
+
+.affiliateOption input {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin: 2px 0 0;
+  accent-color: #ff5f34;
+}
+
+.affiliateOption span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.affiliateOption small {
+  color: #6b7280;
+  overflow-wrap: anywhere;
+}
+
+.error,
+.success {
+  margin-top: 14px !important;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.error {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.success {
+  background: #f0fdf4;
+  color: #166534;
 }
 
 
@@ -139,25 +254,31 @@
 
   .row {
     flex-direction: column;
+    gap: 10px;
   }
 
   .menu {
-    padding: 20px;
+    padding: 0;
     margin: 0;
   }
 
   .menu h1 {
     margin: 0px;
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
     line-height: 1.1;
     min-height: auto;
   
   }
 
+  .conteiner {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
   .conteiner input {
-    height: 35px;
+    height: 44px;
     padding: 10px;
     margin: 5px 0px;
     border: 2px solid #71717150;
@@ -169,7 +290,15 @@
     outline: none;
     transition: all 0.2s ease;
   }
+
+  .conteiner select {
+    height: 44px;
+    font-size: 14px;
+  }
+
   .menu button {
+    width: 100%;
+    justify-content: center;
     padding: 10px 10px;
     margin: 0;
     margin-top: 10px;
@@ -178,4 +307,23 @@
     font-size: 13px;
   }
 
+  .groupHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .affiliateGrid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (width < 420px) {
+  .conteiner {
+    padding: 14px;
+  }
+
+  .menu h1 {
+    font-size: 22px;
+  }
 }

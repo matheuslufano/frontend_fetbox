@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import AffiliatePromoLinks from "../../components/AffiliatePromoLinks";
+import { apagarLink, getApiErrorMessage } from "../../../services/api";
 import { AffiliateDetail } from "./useRelatorios";
 import styles from "./relatorios.module.css";
 
@@ -14,6 +15,8 @@ export default function AffiliateDetails({
   refresh,
   refreshing,
 }: AffiliateDetailsProps) {
+  const [deletingLinkId, setDeletingLinkId] =
+    useState<number | null>(null);
 
   const handleCopyLink = async (link: string) => {
     try {
@@ -22,6 +25,33 @@ export default function AffiliateDetails({
     } catch (error) {
       console.error("Erro ao copiar link:", error);
       alert("Erro ao copiar o link.");
+    }
+  };
+
+  const handleDeleteLink = async (id: number, name?: string | null) => {
+    const label = name || `ID #${id}`;
+    const confirmed = window.confirm(
+      `Deseja apagar o link "${label}"? Essa acao tambem remove os cliques desse link.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingLinkId(id);
+
+    try {
+      await apagarLink(id);
+      refresh();
+    } catch (error) {
+      alert(
+        getApiErrorMessage(
+          error,
+          "Nao foi possivel apagar o link."
+        )
+      );
+    } finally {
+      setDeletingLinkId(null);
     }
   };
 
@@ -82,18 +112,21 @@ export default function AffiliateDetails({
             <table className={styles.table}>
               <thead>
                 <tr className={styles.tableHead}>
-                  <th className={styles.smallCell}>Código</th>
+                  <th className={styles.smallCell}>Nome do link</th>
                   <th className={styles.smallCell}>Links dos afiliados</th>
                   <th className={styles.smallCell}>Cliques</th>
                   <th className={styles.smallCell}>Copiar Link</th>
+                  <th className={styles.smallCell}>Apagar</th>
                 </tr>
               </thead>
 
               <tbody>
                 {block.links.map((l) => (
                   <tr key={l.id} className={styles.tableRow}>
-                    <td className={`${styles.smallCell} ${styles.codeBadge}`}>
-                      {l.shortCode}
+                    <td className={styles.smallCell}>
+                      <strong>
+                        {l.name || "Sem nome"}
+                      </strong>
                     </td>
 
                     <td className={styles.smallCell}>
@@ -138,6 +171,17 @@ export default function AffiliateDetails({
                         onClick={() => handleCopyLink(l.promoLink)}
                       >
                         Copiar link
+                      </button>
+                    </td>
+
+                    <td className={styles.smallCell}>
+                      <button
+                        type="button"
+                        className={styles.deleteButton}
+                        onClick={() => handleDeleteLink(l.id, l.name)}
+                        disabled={deletingLinkId === l.id}
+                      >
+                        {deletingLinkId === l.id ? "Apagando..." : "Apagar"}
                       </button>
                     </td>
                   </tr>

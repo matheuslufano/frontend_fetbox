@@ -4,11 +4,14 @@ import Link from "next/link";
 import styles from "./sidebar.module.css";
 
 import { IoHome } from "react-icons/io5";
-import { LuFolderSearch, LuFileChartLine } from "react-icons/lu";
-import { PiLinkSimpleFill } from "react-icons/pi";
+import { IoFolderOpen } from "react-icons/io5";
+import { BsMegaphoneFill } from "react-icons/bs";
+import { BsClipboardDataFill } from "react-icons/bs";
+import { PiLinkFill } from "react-icons/pi";
 import { FaGear } from "react-icons/fa6";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { ImUsers } from "react-icons/im";
+import { MdSpaceDashboard } from "react-icons/md";
 
 import Image from "next/image";
 
@@ -18,27 +21,22 @@ import logo1 from "../../../../public/logo.jpg";
 export default function Sidebar() {
   return (
     <aside className={styles.sidebar}>
-      
-      <h2 className={styles.titulo}>
-        AFILIADOS NETBOX
-      </h2>
+      <h2 className={styles.titulo}>AFILIADOS NETBOX</h2>
 
-      <Image
-        src={logo1}
-        alt="logo"
-        className={styles.img}
-        width={200}
-      />
+      <Image src={logo1} alt="logo" className={styles.img} width={200} />
 
       <nav>
         <ul className={styles.menuList}>
-
           <li className={styles.button}>
-            <Link href="/pages/menu" className={styles.menuItem}>
-              <IoHome className={styles.icon} />
-              <span>Menu</span>
+            <Link href="/pages/links" className={styles.menuItem}>
+              <PiLinkFill
+                className={styles.icon}
+                style={{ fontSize: "25px", minHeight: "25px" }}
+              />
+              <span>Links e QR</span>
             </Link>
           </li>
+
 
           <li className={styles.button}>
             <Link href="/pages/afiliado" className={styles.menuItem}>
@@ -48,22 +46,28 @@ export default function Sidebar() {
           </li>
 
           <li className={styles.button}>
-            <Link href="/pages/projetos" className={styles.menuItem}>
-              <LuFolderSearch className={styles.icon} />
-              <span>Projetos</span>
+            <Link href="/pages/criarProjetos" className={styles.menuItem}>
+              <IoFolderOpen className={styles.icon} />
+              <span>Criar Campanha</span>
             </Link>
           </li>
 
           <li className={styles.button}>
-            <Link href="/pages/links" className={styles.menuItem}>
-              <PiLinkSimpleFill className={styles.icon} />
-              <span>Links e QR</span>
+            <Link href="/pages/campanhas" className={styles.menuItem}>
+              <BsMegaphoneFill  className={styles.icon} />
+              <span>Campanhas</span>
             </Link>
           </li>
 
+          <li className={styles.button}>
+            <Link href="/dashboard" className={styles.menuItem}>
+              <MdSpaceDashboard className={styles.icon} />
+              <span>Dashboard</span>
+            </Link>
+          </li>
           <li className={styles.button}>
             <Link href="/pages/relatorios" className={styles.menuItem}>
-              <LuFileChartLine className={styles.icon} />
+              <BsClipboardDataFill className={styles.icon} />
               <span>Relatórios</span>
             </Link>
           </li>
@@ -76,8 +80,8 @@ export default function Sidebar() {
           </li>
 
           <li className={styles.button}>
-            <Link href="/pages/configuracoes" className={styles.menuItem}>
-            <RiLogoutBoxFill className={styles.icon} />
+            <Link href="/login" className={styles.menuItem}>
+              <RiLogoutBoxFill className={styles.icon} />
               <span>Sair</span>
             </Link>
           </li>

@@ -32,6 +32,7 @@ export type AffiliateStats = {
   totalClicks: number;
   links: {
     id: number;
+    name: string | null;
     shortCode: string;
     originalUrl: string;
     clicks: number;
@@ -49,6 +50,7 @@ export type CreateAffiliatePayload = {
 export type UpdateAffiliatePayload = Partial<CreateAffiliatePayload>;
 
 export type CreateLinkPayload = {
+  name?: string;
   url: string;
   affiliateId?: number;
 };
@@ -56,6 +58,71 @@ export type CreateLinkPayload = {
 export type CreateLinkResponse = {
   message: string;
   link: string;
+};
+
+export type Campaign = {
+  id: number;
+  name: string;
+  destinationUrl: string;
+  createdAt: string;
+  totalLinks: number;
+  totalAffiliates: number;
+  totalClicks: number;
+  topAffiliate: {
+    id: number;
+    name: string;
+    email: string | null;
+    city: string | null;
+  } | null;
+  topLink: {
+    id: number;
+    name: string | null;
+    originalUrl: string;
+    shortCode: string;
+    promoLink: string;
+    clicks: number;
+    affiliate: {
+      id: number;
+      name: string;
+      email: string | null;
+      city: string | null;
+    } | null;
+  } | null;
+  links: {
+    id: number;
+    name: string | null;
+    originalUrl: string;
+    shortCode: string;
+    promoLink: string;
+    clicks: number;
+    affiliate: {
+      id: number;
+      name: string;
+      email: string | null;
+      city: string | null;
+    } | null;
+  }[];
+};
+
+export type CreateCampaignPayload = {
+  name: string;
+  destinationUrl: string;
+  affiliateIds: number[];
+};
+
+export type LoginPayload = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  token: string;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    city: string | null;
+  };
 };
 
 const api = axios.create({
@@ -142,6 +209,42 @@ export async function criarLink(payload: CreateLinkPayload) {
   };
 }
 
+function normalizeCampaignLinks(campaign: Campaign) {
+  const links = campaign.links.map((link) => ({
+    ...link,
+    promoLink: normalizePromoLink(link.promoLink),
+  }));
+
+  const topLink = campaign.topLink
+    ? {
+        ...campaign.topLink,
+        promoLink: normalizePromoLink(campaign.topLink.promoLink),
+      }
+    : null;
+
+  return {
+    ...campaign,
+    links,
+    topLink,
+  };
+}
+
+export async function criarCampanha(payload: CreateCampaignPayload) {
+  const { data } = await api.post<Campaign>("/campaigns", payload);
+  return normalizeCampaignLinks(data);
+}
+
+export async function listarCampanhas() {
+  const { data } = await api.get<Campaign[]>("/campaigns");
+  return Array.isArray(data)
+    ? data.map(normalizeCampaignLinks)
+    : [];
+}
+
+export async function apagarLink(id: number) {
+  await api.delete(`/links/${id}`);
+}
+
 export async function buscarEstatisticasAfiliado(id: number) {
   const { data } = await api.get<AffiliateStats>(
     `/affiliate/${id}/stats`
@@ -153,6 +256,15 @@ export async function buscarEstatisticasAfiliado(id: number) {
       promoLink: normalizePromoLink(link.promoLink),
     })),
   };
+}
+
+export async function fazerLogin(payload: LoginPayload) {
+  const { data } = await api.post<LoginResponse>(
+    "/auth/login",
+    payload
+  );
+
+  return data;
 }
 
 export default api;

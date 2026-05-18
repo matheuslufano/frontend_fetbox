@@ -287,6 +287,32 @@
   transform: scale(0.97);
 }
 
+.deleteButton {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.deleteButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 /* =========================
    DETALHE POR AFILIADO
 ========================= */
@@ -372,10 +398,12 @@
 .tableWrapper {
   overflow-x: auto;
   border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .table {
   width: 100%;
+  min-width: 720px;
   margin-top: 12px;
   border-collapse: collapse;
 }
@@ -444,7 +472,7 @@
 
 .breakWord {
   color: #535353;
-  font-size: 15;
+  font-size: 15px;
   word-break: break-word;
   overflow-wrap: anywhere;
 }
@@ -489,6 +517,10 @@
 ========================= */
 
 @media (max-width: 768px) {
+  .page {
+    padding: 16px;
+  }
+
   .summaryGrid,
   .statsGrid {
     grid-template-columns: 1fr;
@@ -509,7 +541,8 @@
   }
 
   .refreshButton,
-  .copyButton {
+  .copyButton,
+  .deleteButton {
     width: 100%;
   }
 
@@ -538,5 +571,19 @@
   .copyButton {
     padding: 10px;
     font-size: 13px;
+  }
+}
+
+@media (max-width: 420px) {
+  .page {
+    padding: 12px;
+  }
+
+  .affiliateCard {
+    padding: 14px;
+  }
+
+  .statBox {
+    padding: 14px;
   }
 }
