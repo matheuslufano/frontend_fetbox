@@ -1,6 +1,6 @@
 "use client";
 
-import AffiliatePromoLinks from "../../components/AffiliatePromoLinks";
+import AffiliateDetails from "./AffiliateDetails";
 import { useRelatorios } from "./useRelatorios";
 import styles from "./relatorios.module.css";
 
@@ -45,50 +45,113 @@ export default function Relatorios() {
   }
 
   return (
-
     <div className={styles.page}>
       <h1 className={styles.title}>
         Relatórios
       </h1>
 
-    <div className={styles.summaryGrid}>
-      <div className={styles.card}>
-        <strong>Resumo geral</strong>
+      {/* Resumo geral */}
+      <div className={styles.summaryGrid}>
+        <div className={styles.card}>
+          <div className={styles.summaryHeader}>
+            <strong className={styles.cardTitle}>
+              📊 Resumo geral
+            </strong>
 
-        <p>
-          Total de afiliados:
-          {dashboard.totalAffiliates}
-        </p>
+            <span className={styles.summaryBadge}>
+              Dashboard
+            </span>
+          </div>
 
-        <p>
-          Total de links:
-          {dashboard.totalLinks}
-        </p>
+          <div className={styles.summaryStats}>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>
+                Afiliados
+              </span>
 
-        <p>
-          Total de cliques:
-          {dashboard.totalClicks}
-        </p>
+              <strong className={styles.summaryValue}>
+                {dashboard.totalAffiliates}
+              </strong>
+            </div>
+
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>
+                Links
+              </span>
+
+              <strong className={styles.summaryValue}>
+                {dashboard.totalLinks}
+              </strong>
+            </div>
+
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>
+                Cliques
+              </span>
+
+              <strong className={styles.summaryValue}>
+                {dashboard.totalClicks}
+              </strong>
+            </div>
+          </div>
+        </div>
+
+
+        {/* Top afiliados */}
+        <div className={styles.card}>
+          <div className={styles.topAffiliatesHeader}>
+            <strong className={styles.cardTitle}>
+              🏆 Top afiliados
+            </strong>
+
+            <span className={styles.totalAffiliates}>
+              {dashboard.topAffiliates.length} afiliados
+            </span>
+          </div>
+
+          {dashboard.topAffiliates.length === 0 ? (
+            <p className={styles.emptyText}>
+              Nenhum afiliado com cliques ainda.
+            </p>
+          ) : (
+            <div className={styles.topAffiliatesList}>
+              {dashboard.topAffiliates.map((a, index) => (
+                <div
+                  key={a.id}
+                  className={styles.affiliateRankingCard}
+                >
+                  <div className={styles.affiliateLeft}>
+                    <div className={styles.positionBadge}>
+                      #{index + 1}
+                    </div>
+
+                    <div>
+                      <strong className={styles.affiliateTitle}>
+                        {a.name}
+                      </strong>
+
+                      <p className={styles.affiliateSubtitle}>
+                        Afiliado ID #{a.id}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className={styles.clicksContainer}>
+                    <span className={styles.clicksValue}>
+                      {a.totalClicks}
+                    </span>
+
+                    <span className={styles.clicksLabel}>
+                      clique{a.totalClicks > 1 ? "s" : ""}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
       </div>
-
-      <div className={styles.card}>
-        <strong>Top afiliados</strong>
-
-        {dashboard.topAffiliates.length === 0 ? (
-          <p>
-            Nenhum afiliado com cliques ainda.
-          </p>
-        ) : (
-          <ul>
-            {dashboard.topAffiliates.map((a) => (
-              <li key={a.id}>
-                {a.name} : {a.totalClicks} clique
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
 
       <div className={styles.card}>
         <strong>
@@ -97,222 +160,42 @@ export default function Relatorios() {
 
         <table className={styles.table}>
           <thead>
-            <tr
-              className={
-                styles.tableHead
-              }
-            >
-              <th
-                className={
-                  styles.cell
-                }
-              >
+            <tr className={styles.tableHead}>
+              <th className={styles.cell}>
                 Nome
               </th>
-
-              <th
-                className={
-                  styles.cell
-                }
-              >
+              <th className={styles.cell}>
                 E-mail
               </th>
-
-              <th
-                className={
-                  styles.cell
-                }
-              >
+              <th className={styles.cell}>
                 Ativo
               </th>
             </tr>
           </thead>
 
           <tbody>
-            {affiliateRows.map(
-              (a) => (
-                <tr
-                  key={a.id}
-                  className={
-                    styles.tableRow
-                  }
-                >
-                  <td
-                    className={
-                      styles.cell
-                    }
-                  >
-                    {a.name}
-                  </td>
-
-                  <td
-                    className={
-                      styles.cell
-                    }
-                  >
-                    {a.email ??
-                      "—"}
-                  </td>
-
-                  <td
-                    className={
-                      styles.cell
-                    }
-                  >
-                    {a.active
-                      ? "Sim"
-                      : "Não"}
-                  </td>
-                </tr>
-              )
-            )}
+            {affiliateRows.map((a) => (
+              <tr key={a.id} className={styles.tableRow}>
+                <td className={styles.cell}>
+                  {a.name}
+                </td>
+                <td className={styles.cell}>
+                  {a.email ?? "—"}
+                </td>
+                <td className={styles.cell}>
+                  {a.active ? "Sim" : "Não"}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      <div className={styles.sectionHeader}>
-        <h2
-          className={
-            styles.sectionTitle
-          }
-        >
-          Detalhe por afiliado
-        </h2>
-
-        <button
-          type="button"
-          className={styles.refreshButton}
-          onClick={refresh}
-          disabled={refreshing}
-        >
-          {refreshing
-            ? "Atualizando..."
-            : "Atualizar cliques"}
-        </button>
-      </div>
-
-      {details.map((block) => (
-        <div
-          key={block.affiliateId}
-          className={styles.affiliateCard}
-        >
-          <div className={styles.affiliateHeader}>
-            <div>
-              <h3 className={styles.affiliateName}>
-                {block.affiliate}
-              </h3>
-
-              <span className={styles.affiliateId}>
-                ID #{block.affiliateId}
-              </span>
-            </div>
-          </div>
-
-          <div className={styles.statsGrid}>
-            <div className={styles.statBox}>
-              <span>Links</span>
-              <strong>
-                {block.totalLinks}
-              </strong>
-            </div>
-
-            <div className={styles.statBox}>
-              <span>Cliques</span>
-              <strong>
-                {block.totalClicks}
-              </strong>
-            </div>
-          </div>
-
-          <div className={styles.linksSection}>
-            <h4>
-              Links promocionais
-            </h4>
-
-            <AffiliatePromoLinks
-              links={block.links.map(
-                ({
-                  id,
-                  promoLink,
-                  originalUrl,
-                }) => ({
-                  id,
-                  promoLink,
-                  originalUrl,
-                })
-              )}
-            />
-          </div>
-
-          <div className={styles.tableWrapper}>
-            <table className={styles.table}>
-              <thead>
-                <tr className={styles.tableHead}>
-                  <th className={styles.smallCell}>
-                    Código
-                  </th>
-
-                  <th className={styles.smallCell}>
-                    Destino
-                  </th>
-
-                  <th className={styles.smallCell}>
-                    Link do afiliado
-                  </th>
-
-                  <th className={styles.smallCell}>
-                    Cliques
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {block.links.map((l) => (
-                  <tr
-                    key={l.id}
-                    className={styles.tableRow}
-                  >
-                    <td
-                      className={`${styles.smallCell} ${styles.codeBadge}`}
-                    >
-                      {l.shortCode}
-                    </td>
-
-                    <td
-                      className={`${styles.smallCell} ${styles.breakWord}`}
-                    >
-                      {l.originalUrl}
-                    </td>
-
-                    <td
-                      className={`${styles.smallCell} ${styles.breakWord}`}
-                    >
-                      <a
-                        href={l.promoLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.link}
-                      >
-                        {l.promoLink}
-                      </a>
-                    </td>
-
-                    <td className={styles.smallCell}>
-                      <span
-                        className={
-                          styles.clickBadge
-                        }
-                      >
-                        {l.clicks}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))}
+      <AffiliateDetails
+        details={details}
+        refresh={refresh}
+        refreshing={refreshing}
+      />
     </div>
   );
 }

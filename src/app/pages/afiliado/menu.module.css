@@ -1,145 +1,103 @@
-
 .border {
   border: solid 2px red;
 }
 
-.menu {
-  width: 100%;
-  max-width: 650px;
-  margin: 30px auto;
-  padding: 30px ;
-  border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.721);
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+/* =========================
+   LAYOUT PRINCIPAL
+========================= */
 
-}
-.menu h1 {
-  margin: 40px 0;
-  color: #FF400C;
-  display: flex;
-  justify-content: center; /* horizontal */
-  align-items: center;     /* vertical */
-  text-align: center;
-  font-size: 40px;
-  font-weight: 800;
-  line-height: 1.1;
-  min-height: auto;
-
-}
+.menu,
 .conteiner {
   width: 100%;
   max-width: 650px;
-  margin: 0 auto;
-  padding: 30px ;
-  border-radius: 15px;
-  background-color: white;
+  margin: 24px auto;
+  padding: 28px;
+  border-radius: 16px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
+
+.menu {
+  background-color: rgba(255, 255, 255, 0.72);
+}
+
+.conteiner {
+  background-color: white;
+}
+
+.menu h1 {
+  margin: 20px 0 30px;
+  color: #ff400c;
+  text-align: center;
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
 .conteiner p {
-  margin: 0px;
+  margin: 0;
+}
+
+/* =========================
+   INPUTS / SELECT
+========================= */
+
+.conteiner input,
+.conteiner select {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  margin-top: 5px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-size: 15px;
+  color: #1f1f1f;
+  outline: none;
+  transition: all 0.2s ease;
 }
 
 .conteiner input {
-  width: 100%;
-  height: 45px;
-  padding: 12px;
-  margin: 5px 0px;
   border: 2px solid #71717150;
-  border-radius: 12px;
-  box-sizing: border-box;
-  background-color: #ffffff;
-  font-size: 15px;
-  color: #1f1f1f;
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-/* hover */
-.conteiner input:hover {
-  border-color: #ff4d00;
-}
-
-/* quando clicar */
-.conteiner input:focus {
-  border-color: #ff4d00;
-  box-shadow: 0 0 0 4px rgba(255, 77, 0, 0.2);
 }
 
 .conteiner select {
-  width: 100%;
-  height: 48px;
-  padding: 12px 14px;
   border: 2px solid #ff60342d;
-  border-radius: 12px;
-  background-color: white;
-  color: #1f1f1f;
-  font-size: 15px;
   cursor: pointer;
-  outline: none;
-  transition: all 0.2s ease;
   appearance: none;
+  padding-right: 45px;
 
-  /* seta personalizada */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%23ff5f34' viewBox='0 0 256 256'%3E%3Cpath d='M210.83 98.83a8 8 0 0 0-11.31 0L128 170.34 56.49 98.83a8 8 0 0 0-11.32 11.31l77.17 77.17a8 8 0 0 0 11.32 0l77.17-77.17a8 8 0 0 0 0-11.31Z'/%3E%3C/svg%3E");
+
   background-repeat: no-repeat;
   background-position: right 14px center;
-  padding-right: 45px;
 }
 
-/* hover */
+.conteiner input:hover,
 .conteiner select:hover {
   border-color: #ff4d00;
 }
 
-/* focus */
+.conteiner input:focus,
 .conteiner select:focus {
   border-color: #ff4d00;
-
   box-shadow: 0 0 0 4px rgba(255, 77, 0, 0.2);
 }
 
 .conteiner option {
-  background-color: #fff7f3;
+  background: #fff7f3;
   color: #ff4d00;
-  padding: 10px;
-  margin: 20px;
 }
 
-.button {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.menu button {
-  display: flex;
-  justify-content: flex-end;
-  background-color: #d43508;
-  padding: 10px 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 12px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.menu button:hover {
-  background-color: rgb(255, 60, 0);
-  box-shadow: 0 6px 14px rgba(255, 64, 12, 0.3);
-}
-
+/* =========================
+   GRID FORM
+========================= */
 
 .row {
   display: flex;
-  gap: 15px;
+  gap: 16px;
   width: 100%;
 }
 
@@ -149,12 +107,43 @@
   flex-direction: column;
 }
 
+/* =========================
+   BOTÕES
+========================= */
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menu button {
+  background: #d43508;
+  padding: 12px 18px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menu button:hover {
+  background: rgb(255, 60, 0);
+  box-shadow: 0 6px 14px rgba(255, 64, 12, 0.3);
+}
+
+/* =========================
+   LISTA DE AFILIADOS
+========================= */
+
 .affiliateList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  margin-top: 20px;
   padding: 0;
-  margin: 18px 0 0;
   list-style: none;
 }
 
@@ -163,9 +152,9 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding: 14px;
+  padding: 16px;
   border: 1px solid #f0d8cf;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #fffaf8;
 }
 
@@ -174,7 +163,7 @@
   flex-direction: column;
   gap: 4px;
   min-width: 0;
-  color: #2a2a2a;
+  flex: 1;
 }
 
 .affiliateInfo span {
@@ -182,31 +171,36 @@
   overflow-wrap: anywhere;
 }
 
+/* =========================
+   EDIÇÃO
+========================= */
+
 .editGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   flex: 1;
 }
 
+/* =========================
+   ACTIONS
+========================= */
+
 .actions {
   display: flex;
-  justify-content: flex-end;
   gap: 8px;
   flex-wrap: wrap;
 }
 
 .actions button {
-  min-width: 76px;
-  padding: 9px 12px;
+  min-width: 80px;
+  padding: 10px 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   color: #fff;
   font-weight: 700;
   cursor: pointer;
-  transition:
-    background 0.2s ease,
-    opacity 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .actions button:disabled {
@@ -246,47 +240,36 @@
   background: #8f001a;
 }
 
-@media (width < 768px) {
+/* =========================
+   TABLET
+========================= */
 
-  .row {
-    flex-direction: column;
+@media (max-width: 1024px) {
+  .menu,
+  .conteiner {
+    padding: 24px;
   }
+}
 
-  .menu {
-    padding: 20px;
-    margin: 0;
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .menu,
+  .conteiner {
+    margin: 12px;
+    padding: 18px;
+    border-radius: 14px;
   }
 
   .menu h1 {
-    margin: 0px;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1.1;
-    min-height: auto;
-  
+    margin: 10px 0 20px;
   }
 
-  .conteiner input {
-    height: 35px;
-    padding: 10px;
-    margin: 5px 0px;
-    border: 2px solid #71717150;
-    border-radius: 12px;
-    box-sizing: border-box;
-    background-color: #ffffff;
-    font-size: 15px;
-    color: #1f1f1f;
-    outline: none;
-    transition: all 0.2s ease;
-  }
-  .menu button {
-    padding: 10px 10px;
-    margin: 0;
-    margin-top: 10px;
-    border-radius: 7px;
-    color: white;
-    font-size: 13px;
+  .row {
+    flex-direction: column;
+    gap: 10px;
   }
 
   .affiliateItem {
@@ -299,11 +282,39 @@
   }
 
   .actions {
-    justify-content: stretch;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .actions button,
+  .menu button {
+    width: 100%;
+  }
+
+  .conteiner input,
+  .conteiner select {
+    min-height: 44px;
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   CELULAR PEQUENO
+========================= */
+
+@media (max-width: 480px) {
+  .menu,
+  .conteiner {
+    padding: 14px;
+  }
+  
+
+  .menu h1 {
+    font-size: 24px;
   }
 
   .actions button {
-    flex: 1;
+    font-size: 13px;
+    padding: 10px;
   }
-
 }

@@ -1,6 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
+import SummaryCard from "./components/SummaryCard";
+import TopAffiliates from "./components/TopAffiliates";
+import AffiliatesTable from "./components/AffiliatesTable";
+
+import styles from "./relatorios.module.css";
+
 import {
   buscarDashboard,
   DashboardData,
@@ -8,15 +15,20 @@ import {
 } from "../../services/api";
 
 export default function Dashboard() {
-  const [data, setData] = useState<DashboardData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] =
+    useState<DashboardData | null>(null);
+
+  const [error, setError] =
+    useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
       try {
-        const response = await buscarDashboard();
+        const response =
+          await buscarDashboard();
+
         if (!cancelled) {
           setData(response);
         }
@@ -25,7 +37,7 @@ export default function Dashboard() {
           setError(
             getApiErrorMessage(
               err,
-              "Nao foi possivel carregar o dashboard."
+              "Não foi possível carregar o dashboard."
             )
           );
         }
@@ -39,24 +51,45 @@ export default function Dashboard() {
     };
   }, []);
 
-  if (error) return <p>{error}</p>;
-  if (!data) return <p>Carregando...</p>;
+  if (error) {
+    return (
+      <div className={styles.page}>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className={styles.page}>
+        <p>Carregando...</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className={styles.page}>
+      <h1 className={styles.title}>
+        Dashboard
+      </h1>
 
-      <p>Total afiliados: {data.totalAffiliates}</p>
-      <p>Total links: {data.totalLinks}</p>
-      <p>Total cliques: {data.totalClicks}</p>
+      {/* Resumo + Top afiliados */}
+      <div className={styles.summaryGrid}>
+        <SummaryCard
+          dashboard={data}
+        />
 
-      <h2>Top afiliados</h2>
+        <TopAffiliates
+          affiliates={data.topAffiliates}
+        />
+      </div>
 
-      {data.topAffiliates.map((a) => (
-        <div key={a.id}>
-          {a.name} - {a.totalClicks} cliques
-        </div>
-      ))}
+      {/* Afiliados cadastrados
+      <AffiliatesTable
+        affiliates={
+          data.affiliates ?? []
+        }
+      /> */}
     </div>
   );
 }
