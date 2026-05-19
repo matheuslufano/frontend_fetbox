@@ -1,0 +1,544 @@
+.page {
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #fff1eb;
+  color: #c22a00;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  margin: 0;
+  color: #1f1f1f;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.header p {
+  max-width: 560px;
+  margin: 12px auto 0;
+  color: #5f6368;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.viewLinksButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 16px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.viewLinksButton:hover {
+  background: #1d4ed8;
+}
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 28px;
+  border: 1px solid #f0e2dc;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 16px 36px rgba(82, 26, 0, 0.12);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.cardIcon {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #ff5f34;
+  color: #fff;
+  font-size: 23px;
+}
+
+.cardHeader h2 {
+  margin: 0;
+  color: #1f1f1f;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.cardHeader p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #232323;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.field span svg {
+  color: #ff5f34;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 50px;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
+  color: #111827;
+  font-size: 15px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.field input:hover,
+.field select:hover {
+  border-color: #ff9a7f;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #ff5f34;
+  box-shadow: 0 0 0 4px rgba(255, 95, 52, 0.14);
+}
+
+.field input::placeholder {
+  color: #a1a1aa;
+}
+
+.field select {
+  cursor: pointer;
+}
+
+.field select:disabled {
+  cursor: wait;
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.primaryButton,
+.copyButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 46px;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.primaryButton {
+  padding: 0 20px;
+  background: #ff5f34;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: #c22a00;
+  transform: translateY(-1px);
+}
+
+.primaryButton:disabled,
+.copyButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.error {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.result {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: center;
+  margin-top: 22px;
+  padding: 16px;
+  border: 1px solid #dcfce7;
+  border-radius: 12px;
+  background: #f0fdf4;
+}
+
+.resultText {
+  min-width: 0;
+}
+
+.resultText span {
+  display: block;
+  margin-bottom: 6px;
+  color: #166534;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.resultText a {
+  display: block;
+  color: #14532d;
+  font-size: 15px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.resultText a:hover {
+  text-decoration: underline;
+}
+
+.resultText small {
+  display: block;
+  margin-top: 4px;
+  color: #166534;
+  font-size: 12px;
+}
+
+.copyButton {
+  padding: 0 16px;
+  background: #15803d;
+}
+
+.copyButton:hover {
+  background: #166534;
+  transform: translateY(-1px);
+}
+
+.copyHint {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #166534;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(17, 24, 39, 0.58);
+}
+
+.linksModal {
+  width: min(1120px, 100%);
+  max-height: min(86vh, 860px);
+  overflow-y: auto;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.modalHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px;
+  border-bottom: 1px solid #eef1f5;
+  background: #fff;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 26px;
+}
+
+.modalHeader p {
+  margin: 8px 0 0;
+  color: #6b7280;
+}
+
+.modalActions {
+  display: flex;
+  gap: 8px;
+}
+
+.iconButton {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: #eef4ff;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.iconButton:hover:not(:disabled) {
+  background: #dbeafe;
+}
+
+.iconButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.loadingText,
+.emptyLinks {
+  margin: 0;
+  padding: 28px;
+  color: #6b7280;
+}
+
+.emptyLinks p {
+  margin-bottom: 0;
+}
+
+.linksGrid {
+  display: grid;
+  gap: 14px;
+  padding: 18px 22px 22px;
+}
+
+.linkCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 152px;
+  gap: 18px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fafbff;
+}
+
+.linkCardBody {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.linkMeta {
+  display: grid;
+  gap: 4px;
+}
+
+.linkMeta strong {
+  color: #111827;
+  font-size: 18px;
+}
+
+.linkMeta span,
+.linkGroup span,
+.qrBox span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.linkGroup {
+  display: grid;
+  gap: 4px;
+}
+
+.linkGroup a {
+  color: #2563eb;
+  overflow-wrap: anywhere;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.linkGroup a:hover {
+  text-decoration: underline;
+}
+
+.linkActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border: 0;
+  border-radius: 10px;
+  padding: 0 16px;
+  background: #eef4ff;
+  color: #1d4ed8;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.secondaryButton:hover {
+  background: #dbeafe;
+}
+
+.qrBox {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.qrBox img {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .header {
+    margin-bottom: 18px;
+  }
+
+  .header h1 {
+    font-size: 26px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+
+  .cardHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .actions,
+  .primaryButton,
+  .copyButton {
+    width: 100%;
+  }
+
+  .result {
+    grid-template-columns: 1fr;
+  }
+
+  .modalBackdrop {
+    align-items: stretch;
+    padding: 10px;
+  }
+
+  .linksModal {
+    max-height: calc(100vh - 20px);
+    border-radius: 12px;
+  }
+
+  .modalHeader,
+  .linkCard {
+    grid-template-columns: 1fr;
+  }
+
+  .modalHeader {
+    flex-direction: column;
+  }
+
+  .modalActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .linksGrid {
+    padding: 14px;
+  }
+
+  .linkActions,
+  .secondaryButton {
+    width: 100%;
+  }
+
+  .qrBox img {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 420px) {
+  .header h1 {
+    font-size: 23px;
+  }
+
+  .header p {
+    font-size: 14px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .cardHeader h2 {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,354 @@
+.page {
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.badge {
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff1eb;
+  color: #c22a00;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  margin: 0;
+  color: #111827;
+  font-size: 32px;
+}
+
+.header p {
+  margin: 8px 0 0;
+  color: #ffffff;
+}
+
+.campaignList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card,
+.emptyCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.emptyCard {
+  padding: 24px;
+}
+
+.emptyCard p {
+  margin-bottom: 0;
+  color: #6b7280;
+}
+
+.cardButton {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  border: 0;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cardButton:hover {
+  background: #fffaf8;
+}
+
+.cardActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cardTitleBlock {
+  min-width: 0;
+}
+
+.cardTitleBlock strong {
+  display: block;
+  color: #111827;
+  font-size: 20px;
+}
+
+.cardTitleBlock span {
+  display: block;
+  margin-top: 6px;
+  color: #6b7280;
+  overflow-wrap: anywhere;
+}
+
+.cardMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.metric {
+  padding: 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  text-align: center;
+}
+
+.metric strong {
+  display: block;
+  color: #111827;
+  font-size: 22px;
+}
+
+.metric span {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.expandButton,
+.deleteButton {
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.expandButton {
+  background: #fff1eb;
+  color: #c22a00;
+}
+
+.expandButton:hover {
+  background: #ffe0d5;
+}
+
+.deleteButton {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: #fecaca;
+}
+
+.deleteButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.report {
+  padding: 0 20px 20px;
+}
+
+.reportGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.infoBox {
+  padding: 14px;
+  border: 1px solid #eef1f5;
+  border-radius: 12px;
+  background: #fafbff;
+}
+
+.infoBox span {
+  display: block;
+  margin-bottom: 6px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.infoBox strong {
+  color: #111827;
+}
+
+.sectionTitle h2 {
+  margin: 22px 0 12px;
+  font-size: 20px;
+}
+
+.rankingList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.rankingItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #eef1f5;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.rankingItem p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  overflow-wrap: anywhere;
+}
+
+.position {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 800;
+}
+
+.clickPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: #1d4ed8;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #edf2f7;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  background: #f8fafc;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.table a {
+  color: #2563eb;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.table a:hover {
+  text-decoration: underline;
+}
+
+.copyButton {
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 12px;
+  background: #ff5f34;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.copyButton:hover {
+  background: #c22a00;
+}
+
+.copyHint,
+.error,
+.muted {
+  color: #6b7280;
+}
+
+.copyHint {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  color: #166534;
+  font-weight: 800;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+@media (max-width: 900px) {
+  .cardButton {
+    grid-template-columns: 1fr;
+  }
+
+  .cardMetrics,
+  .reportGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 16px;
+  }
+
+  .header h1 {
+    font-size: 26px;
+  }
+
+  .cardButton,
+  .report {
+    padding: 16px;
+  }
+
+  .cardMetrics,
+  .reportGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .rankingItem {
+    grid-template-columns: auto 1fr;
+  }
+
+  .rankingItem .clickPill {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 420px) {
+  .page {
+    padding: 12px;
+  }
+}

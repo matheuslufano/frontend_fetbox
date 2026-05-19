@@ -1,0 +1,405 @@
+.card {
+  margin-top: 16px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.summaryHeader,
+.topAffiliatesHeader,
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.summaryBadge,
+.totalAffiliates {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.summaryStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.summaryItem {
+  padding: 18px;
+  border: 1px solid #eef1f5;
+  border-radius: 14px;
+  background: #fafbff;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.summaryItem:hover,
+.affiliateRankingCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.summaryLabel {
+  display: block;
+  margin-bottom: 8px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.summaryValue {
+  display: block;
+  color: #111827;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.topAffiliatesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.affiliateRankingCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #eef1f5;
+  border-radius: 14px;
+  background: #fafbff;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.affiliateLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.positionBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.affiliateTitle {
+  display: block;
+  font-size: 15px;
+}
+
+.affiliateSubtitle {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.clicksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clicksValue {
+  color: #111827;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.clicksLabel {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.emptyText {
+  padding: 20px 0;
+  color: #6b7280;
+  text-align: center;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+  gap: 16px;
+}
+
+.chartCard {
+  margin-top: 16px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.barChart {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.barRow {
+  display: grid;
+  gap: 8px;
+}
+
+.barInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #374151;
+  font-size: 14px;
+}
+
+.barInfo span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barInfo strong {
+  color: #111827;
+}
+
+.barTrack {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eef2f7;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2563eb, #16a34a);
+}
+
+.healthChart {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.donutChart {
+  display: grid;
+  width: 150px;
+  height: 150px;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.donutCenter {
+  display: flex;
+  width: 96px;
+  height: 96px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #eef1f5;
+}
+
+.donutCenter strong {
+  color: #111827;
+  font-size: 28px;
+}
+
+.donutCenter span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.healthStats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.healthItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.healthItem strong,
+.efficiencyBox strong {
+  display: block;
+  color: #111827;
+  font-size: 18px;
+}
+
+.healthItem span,
+.efficiencyBox span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.activeDot,
+.inactiveDot {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.activeDot {
+  background: #16a34a;
+}
+
+.inactiveDot {
+  background: #ef4444;
+}
+
+.efficiencyBox {
+  margin-top: 4px;
+  padding: 12px;
+  border: 1px solid #eef1f5;
+  border-radius: 12px;
+  background: #fafbff;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 560px;
+  margin-top: 12px;
+  border-collapse: collapse;
+}
+
+.tableHead {
+  border-bottom: 1px solid #ddd;
+  background: #f8f9fc;
+  text-align: left;
+}
+
+.tableHead th {
+  font-weight: 600;
+}
+
+.tableRow {
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease;
+}
+
+.tableRow:hover {
+  background: #fafafa;
+}
+
+.cell {
+  padding: 12px 8px;
+}
+
+.activeBadge,
+.inactiveBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 74px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.activeBadge {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.inactiveBadge {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .summaryStats {
+    grid-template-columns: 1fr;
+  }
+
+  .chartsGrid,
+  .healthChart {
+    grid-template-columns: 1fr;
+  }
+
+  .donutChart {
+    margin: 0 auto;
+  }
+
+  .summaryHeader,
+  .topAffiliatesHeader,
+  .sectionHeader,
+  .chartHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .affiliateRankingCard {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .clicksContainer {
+    align-items: flex-start;
+  }
+
+  .cell {
+    font-size: 14px;
+    padding: 10px 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .card {
+    padding: 14px;
+  }
+
+  .summaryItem {
+    padding: 14px;
+  }
+}

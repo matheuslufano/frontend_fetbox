@@ -6,7 +6,7 @@ import { FormEvent, useState } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa6";
 import { IoArrowForward } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import { fazerLogin, getApiErrorMessage } from "../../services/api";
+import { fazerLogin, getApiErrorMessage } from "@/lib/api";
 import logo from "../../../public/logo.jpg";
 import styles from "./login.module.css";
 
@@ -38,7 +38,7 @@ export default function Login() {
         JSON.stringify(data.user)
       );
 
-      router.push("/pages/menu");
+      router.push("/dashboard");
     } catch (err) {
       setError(
         getApiErrorMessage(
@@ -108,7 +108,7 @@ export default function Login() {
               <span>Lembrar acesso</span>
             </label>
 
-            <Link href="/pages/configuracoes">Esqueci minha senha</Link>
+            <Link href="/configuracoes">Esqueci minha senha</Link>
           </div>
 
           <button

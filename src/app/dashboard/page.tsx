@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AffiliatesTable from "../components/report/AffiliatesTable";
-import SummaryCard from "../components/report/SummaryCard";
-import TopAffiliates from "../components/report/TopAffiliates";
+import AffiliatesTable from "@/components/report/AffiliatesTable";
+import DashboardCharts from "@/components/report/DashboardCharts";
+import SummaryCard from "@/components/report/SummaryCard";
+import TopAffiliates from "@/components/report/TopAffiliates";
 import {
   Affiliate,
   buscarDashboard,
   DashboardData,
   getApiErrorMessage,
   listarAfiliados,
-} from "../../services/api";
+} from "@/lib/api";
 import styles from "./relatorios.module.css";
 
 export default function Dashboard() {
@@ -83,6 +84,11 @@ export default function Dashboard() {
         <SummaryCard dashboard={data} />
         <TopAffiliates affiliates={data.topAffiliates} />
       </div>
+
+      <DashboardCharts
+        dashboard={data}
+        affiliateRows={affiliateRows}
+      />
 
       <AffiliatesTable affiliateRows={affiliateRows} />
     </div>
