@@ -200,6 +200,111 @@
   text-align: center;
   padding: 20px 0;
 }
+
+.conversionSummary {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.conversionHero,
+.conversionRanking {
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.conversionHero {
+  background: linear-gradient(135deg, #fff7ed, #ffffff);
+  border-color: #fed7aa;
+}
+
+.conversionHero span {
+  display: block;
+  color: #9a3412;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.conversionHero strong {
+  display: block;
+  margin-top: 8px;
+  color: #ea580c;
+  font-size: 42px;
+  line-height: 1;
+}
+
+.conversionHero p {
+  margin-top: 10px;
+  color: #57534e;
+  line-height: 1.45;
+}
+
+.rankingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.rankingHeader strong {
+  font-size: 17px;
+}
+
+.rankingHeader span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rankingList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rankingItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #eef1f5;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.rankingItem strong {
+  display: block;
+}
+
+.rankingItem p {
+  margin: 3px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.rankBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #ffedd5;
+  color: #c2410c;
+  font-weight: 800;
+}
 /* =========================
    SEÇÕES
 ========================= */
@@ -352,7 +457,7 @@
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -403,7 +508,7 @@
 
 .table {
   width: 100%;
-  min-width: 720px;
+  min-width: 840px;
   margin-top: 12px;
   border-collapse: collapse;
 }
@@ -512,6 +617,27 @@
   font-weight: 600;
 }
 
+.conversionBadge,
+.zeroBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.conversionBadge {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.zeroBadge {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
 /* =========================
    RESPONSIVO
 ========================= */
@@ -522,6 +648,7 @@
   }
 
   .summaryGrid,
+  .conversionSummary,
   .statsGrid {
     grid-template-columns: 1fr;
   }

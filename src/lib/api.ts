@@ -27,10 +27,12 @@ export type DashboardData = {
   totalAffiliates: number;
   totalLinks: number;
   totalClicks: number;
+  totalConversions: number;
   topAffiliates: {
     id: number;
     name: string;
     totalClicks: number;
+    totalConversions: number;
   }[];
 };
 
@@ -38,13 +40,16 @@ export type AffiliateStats = {
   affiliate: string;
   totalLinks: number;
   totalClicks: number;
+  totalConversions: number;
   links: {
     id: number;
     name: string | null;
     shortCode: string;
     originalUrl: string;
     clicks: number;
+    conversions: number;
     promoLink: string;
+    whatsappLink: string;
   }[];
 };
 
@@ -91,6 +96,8 @@ export type LinkItem = {
   shortCode: string;
   promoLink: string;
   clicks: number;
+  conversions: number;
+  whatsappLink: string;
   createdAt: string;
   qrCode: string;
   affiliate: {
@@ -109,6 +116,7 @@ export type Campaign = {
   totalLinks: number;
   totalAffiliates: number;
   totalClicks: number;
+  totalConversions: number;
   topAffiliate: {
     id: number;
     name: string;
@@ -122,6 +130,8 @@ export type Campaign = {
     shortCode: string;
     promoLink: string;
     clicks: number;
+    conversions: number;
+    whatsappLink: string;
     affiliate: {
       id: number;
       name: string;
@@ -136,6 +146,8 @@ export type Campaign = {
     shortCode: string;
     promoLink: string;
     clicks: number;
+    conversions: number;
+    whatsappLink: string;
     affiliate: {
       id: number;
       name: string;
@@ -278,6 +290,7 @@ export async function listarLinks() {
     ? data.map((link) => ({
         ...link,
         promoLink: normalizePromoLink(link.promoLink),
+        whatsappLink: normalizePromoLink(link.whatsappLink),
       }))
     : [];
 }
@@ -286,12 +299,14 @@ function normalizeCampaignLinks(campaign: Campaign) {
   const links = campaign.links.map((link) => ({
     ...link,
     promoLink: normalizePromoLink(link.promoLink),
+    whatsappLink: normalizePromoLink(link.whatsappLink),
   }));
 
   const topLink = campaign.topLink
     ? {
         ...campaign.topLink,
         promoLink: normalizePromoLink(campaign.topLink.promoLink),
+        whatsappLink: normalizePromoLink(campaign.topLink.whatsappLink),
       }
     : null;
 
@@ -331,6 +346,7 @@ export async function buscarEstatisticasAfiliado(id: number) {
     links: data.links.map((link) => ({
       ...link,
       promoLink: normalizePromoLink(link.promoLink),
+      whatsappLink: normalizePromoLink(link.whatsappLink),
     })),
   };
 }

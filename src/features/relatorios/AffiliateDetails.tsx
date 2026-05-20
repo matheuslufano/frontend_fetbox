@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AffiliatePromoLinks from "@/components/AffiliatePromoLinks";
 import { apagarLink, getApiErrorMessage } from "@/lib/api";
 import { AffiliateDetail } from "./useRelatorios";
 import styles from "./relatorios.module.css";
@@ -17,6 +16,19 @@ export default function AffiliateDetails({
 }: AffiliateDetailsProps) {
   const [deletingLinkId, setDeletingLinkId] =
     useState<number | null>(null);
+
+  const conversionRanking = details
+    .filter((affiliate) => (affiliate.totalConversions ?? 0) > 0)
+    .sort(
+      (a, b) =>
+        (b.totalConversions ?? 0) - (a.totalConversions ?? 0)
+    );
+
+  const totalConversions = details.reduce(
+    (sum, affiliate) =>
+      sum + (affiliate.totalConversions ?? 0),
+    0
+  );
 
   const handleCopyLink = async (link: string) => {
     try {
@@ -66,8 +78,51 @@ export default function AffiliateDetails({
           onClick={refresh}
           disabled={refreshing}
         >
-          {refreshing ? "Atualizando..." : "Atualizar cliques"}
+          {refreshing ? "Atualizando..." : "Atualizar relatorio"}
         </button>
+      </div>
+
+      <div className={styles.conversionSummary}>
+        <div className={styles.conversionHero}>
+          <span>Conversoes pelo WhatsApp</span>
+          <strong>{totalConversions}</strong>
+          <p>
+            Cliques no botao da landing que vieram de links de divulgacao.
+          </p>
+        </div>
+
+        <div className={styles.conversionRanking}>
+          <div className={styles.rankingHeader}>
+            <strong>Afiliados que converteram</strong>
+            <span>{conversionRanking.length} com conversao</span>
+          </div>
+
+          {conversionRanking.length === 0 ? (
+            <p className={styles.emptyText}>
+              Nenhum afiliado gerou conversao ainda.
+            </p>
+          ) : (
+            <div className={styles.rankingList}>
+              {conversionRanking.map((affiliate, index) => (
+                <div
+                  key={affiliate.affiliateId}
+                  className={styles.rankingItem}
+                >
+                  <span className={styles.rankBadge}>#{index + 1}</span>
+
+                  <div>
+                    <strong>{affiliate.affiliate}</strong>
+                    <p>ID #{affiliate.affiliateId}</p>
+                  </div>
+
+                  <span className={styles.conversionBadge}>
+                    {affiliate.totalConversions}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {details.map((block) => (
@@ -92,6 +147,11 @@ export default function AffiliateDetails({
               <span>Cliques</span>
               <strong>{block.totalClicks}</strong>
             </div>
+
+            <div className={styles.statBox}>
+              <span>Conversoes</span>
+              <strong>{block.totalConversions ?? 0}</strong>
+            </div>
           </div>
 
           <div className={styles.linksSection}>
@@ -115,6 +175,7 @@ export default function AffiliateDetails({
                   <th className={styles.smallCell}>Nome do link</th>
                   <th className={styles.smallCell}>Links dos afiliados</th>
                   <th className={styles.smallCell}>Cliques</th>
+                  <th className={styles.smallCell}>Conversoes</th>
                   <th className={styles.smallCell}>Copiar Link</th>
                   <th className={styles.smallCell}>Apagar</th>
                 </tr>
@@ -161,6 +222,18 @@ export default function AffiliateDetails({
                     <td className={styles.smallCell}>
                       <span className={styles.clickBadge}>
                         {l.clicks}
+                      </span>
+                    </td>
+
+                    <td className={styles.smallCell}>
+                      <span
+                        className={
+                          (l.conversions ?? 0) > 0
+                            ? styles.conversionBadge
+                            : styles.zeroBadge
+                        }
+                      >
+                        {l.conversions ?? 0}
                       </span>
                     </td>
 
